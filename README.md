@@ -63,15 +63,15 @@ API responses are cached in-memory (per page and per user) via a shared service 
 src/
   app/
     components/
-      header/ # Top bar + theme + search
+      header/       # Top bar + theme + search
     pages/
-      users/ # Users list + pagination
-      user-details/ # User details page
+      users/       # Users list + pagination
+      user-details/       # User details page
     core/
-      interceptors/ # API key handling
-      services/ # Theme + ReqRes caching service
+      interceptors/       # API key handling
+      services/       # Theme + ReqRes caching service
   environments/
-    environment.ts # ReqRes API key
+    environment.ts       # ReqRes API key
 ```
 
 ## Notes for Reviewers
