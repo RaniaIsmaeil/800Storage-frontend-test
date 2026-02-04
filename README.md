@@ -7,7 +7,7 @@ A polished Angular (standalone) single‑page application that showcases a respo
 - User details page with back navigation
 - Instant search by user ID with live results
 - Dark/Light theme toggle with persisted preference
-- Custom UI styling (no external UI library required)
+- Custom UI styling
 - Standalone Angular components (no NgModules)
 - API key handling via HTTP interceptor
 - Cached API responses to avoid repeat requests
@@ -63,19 +63,19 @@ API responses are cached in-memory (per page and per user) via a shared service 
 src/
   app/
     components/
-      header/              # Top bar + theme + search
+      header/ # Top bar + theme + search
     pages/
-      users/               # Users list + pagination
-      user-details/        # User details page
+      users/ # Users list + pagination
+      user-details/ # User details page
     core/
-      interceptors/        # API key handling
-      services/            # Theme + ReqRes caching service
+      interceptors/ # API key handling
+      services/ # Theme + ReqRes caching service
   environments/
-    environment.ts         # ReqRes API key
+    environment.ts # ReqRes API key
 ```
 
 ## Notes for Reviewers
 - The UI is fully responsive and optimized for desktop and mobile.
 - Theme preference is persisted in localStorage and applied on load.
-- Search by ID is instant and supports partial matches (e.g., `1` → `1`, `11`).
+- Search by ID is instant and supports partial matches (e.g., `1` shows `1`, `11`).
 - ReqRes demo data provides two pages of users; pagination reflects the API response.
