@@ -5,7 +5,7 @@
       <h1>User Directory</h1>
       <p class="subtitle">Browse the users list.</p>
     </div>
-    <div class="page-chip">Page {{ page() }} of {{ totalPages() }}</div>
+    <div class="page-chip" aria-hidden="true"></div>
   </div>
 
   <div class="loading-bar" *ngIf="isLoading()">
@@ -32,6 +32,7 @@
     <button type="button" class="primary" (click)="prevPage()" [disabled]="page() === 1 || isLoading()">
       Previous
     </button>
+    <span class="page-info">Page {{ page() }} / {{ totalPages() }}</span>
     <button type="button" class="primary" (click)="nextPage()" [disabled]="page() === totalPages() || isLoading()">
       Next
     </button>

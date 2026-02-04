@@ -1,23 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-
-type ApiUser = {
-  id: number;
-  email: string;
-  first_name: string;
-  last_name: string;
-  avatar: string;
-};
-
-type UsersResponse = {
-  page: number;
-  per_page: number;
-  total: number;
-  total_pages: number;
-  data: ApiUser[];
-};
+import { ReqresService, ApiUser } from '../../core/services/reqres.service';
 
 @Component({
   selector: 'app-users-page',
@@ -27,9 +11,9 @@ type UsersResponse = {
   styleUrl: './users-page.component.scss'
 })
 export class UsersPageComponent {
-  private readonly http = inject(HttpClient);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
+  private readonly reqres = inject(ReqresService);
 
   protected readonly users = signal<ApiUser[]>([]);
   protected readonly page = signal(1);
@@ -50,7 +34,7 @@ export class UsersPageComponent {
 
     this.isLoading.set(true);
     this.error.set(null);
-    this.http.get<UsersResponse>(`https://reqres.in/api/users?page=${page}`).subscribe({
+    this.reqres.getUsersPage(page).subscribe({
       next: (response) => {
         this.users.set(response.data);
         this.page.set(response.page);

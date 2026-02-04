@@ -203,9 +203,20 @@ body[data-theme='light'] .icon.moon {
 @media (max-width: 720px) {
   .topbar {
     padding: 14px 16px;
+    flex-wrap: wrap;
+    gap: 12px;
   }
 
-  .search {
-    display: none;
+  .brand {
+    flex: 1 1 100%;
+  }
+
+  .topbar-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .search input {
+    width: 100%;
   }
 }

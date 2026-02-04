@@ -1,32 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
 import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { Subject, debounceTime, distinctUntilChanged, forkJoin, map, of, switchMap } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { Subject, debounceTime, distinctUntilChanged, map, of, switchMap } from 'rxjs';
 import { ThemeService } from '../../core/services/theme.service';
-
-type ApiUser = {
-  id: number;
-  email: string;
-  first_name: string;
-  last_name: string;
-  avatar: string;
-};
-
-type UserResponse = {
-  data: ApiUser;
-};
-
-type UsersResponse = {
-  page: number;
-  per_page: number;
-  total: number;
-  total_pages: number;
-  data: ApiUser[];
-};
+import { ApiUser, ReqresService } from '../../core/services/reqres.service';
 
 @Component({
   selector: 'app-header',
@@ -36,7 +15,7 @@ type UsersResponse = {
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
-  private readonly http = inject(HttpClient);
+  private readonly reqres = inject(ReqresService);
   private readonly router = inject(Router);
   private readonly destroyRef = inject(DestroyRef);
   private readonly search$ = new Subject<string>();
@@ -51,7 +30,12 @@ export class HeaderComponent {
   private allUsers: ApiUser[] = [];
 
   constructor() {
-    this.loadAllUsers();
+    this.reqres
+      .getAllUsers()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((users) => {
+        this.allUsers = users;
+      });
     this.search$
       .pipe(
         map((value) => value.trim()),
@@ -115,19 +99,5 @@ export class HeaderComponent {
     this.search$.next('');
   }
 
-  private loadAllUsers() {
-    this.http.get<UsersResponse>(`https://reqres.in/api/users?page=1`).subscribe({
-      next: (response) => {
-        const requests = [];
-        for (let page = 1; page <= response.total_pages; page += 1) {
-          requests.push(this.http.get<UsersResponse>(`https://reqres.in/api/users?page=${page}`));
-        }
-        forkJoin(requests).subscribe({
-          next: (pages) => {
-            this.allUsers = pages.flatMap((page) => page.data);
-          }
-        });
-      }
-    });
-  }
+  
 }

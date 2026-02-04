@@ -1,6 +1,6 @@
 # 800Storage Frontend Test
 
-A polished Angular (standalone) single‑page application that showcases a responsive user directory, theming, and clean UX using the ReqRes API. Built for a hiring task with professional structure and documentation.
+A polished Angular (standalone) single‑page application that showcases a responsive user directory, theming, search, and caching using the ReqRes API. Built for a hiring task with professional structure and documentation.
 
 ## Highlights
 - Paginated users list (centered and responsive)
@@ -10,6 +10,7 @@ A polished Angular (standalone) single‑page application that showcases a respo
 - Custom UI styling (no external UI library required)
 - Standalone Angular components (no NgModules)
 - API key handling via HTTP interceptor
+- Cached API responses to avoid repeat requests
 - Loading state UI while data is fetched
 
 ## Tech Stack
@@ -54,6 +55,9 @@ The API key is attached automatically to each request via an HTTP interceptor at
 src/app/core/interceptors/api-key.interceptor.ts
 ```
 
+## Caching
+API responses are cached in-memory (per page and per user) via a shared service to avoid duplicate network calls. This keeps pagination, details, and search fast.
+
 ## Project Structure (high level)
 ```
 src/
@@ -65,7 +69,7 @@ src/
       user-details/        # User details page
     core/
       interceptors/        # API key handling
-      services/            # Theme service
+      services/            # Theme + ReqRes caching service
   environments/
     environment.ts         # ReqRes API key
 ```
@@ -74,4 +78,4 @@ src/
 - The UI is fully responsive and optimized for desktop and mobile.
 - Theme preference is persisted in localStorage and applied on load.
 - Search by ID is instant and supports partial matches (e.g., `1` → `1`, `11`).
-- Clean, standalone structure allows fast extension (caching, interceptors, etc.).
+- ReqRes demo data provides two pages of users; pagination reflects the API response.

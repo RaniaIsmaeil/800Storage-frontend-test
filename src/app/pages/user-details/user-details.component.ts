@@ -1,21 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, DestroyRef, inject, signal } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { map, of, switchMap } from 'rxjs';
-
-type ApiUser = {
-  id: number;
-  email: string;
-  first_name: string;
-  last_name: string;
-  avatar: string;
-};
-
-type UserResponse = {
-  data: ApiUser;
-};
+import { ReqresService, ApiUser } from '../../core/services/reqres.service';
 
 @Component({
   selector: 'app-user-details',
@@ -25,9 +13,9 @@ type UserResponse = {
   styleUrl: './user-details.component.scss'
 })
 export class UserDetailsComponent {
-  private readonly http = inject(HttpClient);
   private readonly route = inject(ActivatedRoute);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly reqres = inject(ReqresService);
 
   protected readonly user = signal<ApiUser | null>(null);
   protected readonly isLoading = signal(true);
@@ -56,16 +44,16 @@ export class UserDetailsComponent {
           }
           this.isLoading.set(true);
           this.error.set(null);
-          return this.http.get<UserResponse>(`https://reqres.in/api/users/${id}`);
+          return this.reqres.getUser(id);
         }),
         takeUntilDestroyed(this.destroyRef)
       )
       .subscribe({
-        next: (response) => {
-          if (!response) {
+        next: (user) => {
+          if (!user) {
             return;
           }
-          this.user.set(response.data);
+          this.user.set(user);
           this.isLoading.set(false);
         },
         error: () => {
