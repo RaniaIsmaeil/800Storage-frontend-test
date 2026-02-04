@@ -1,59 +1,73 @@
-# 800storageFrontendTest
+# 800Storage Frontend Test
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.3.
+A polished Angular (standalone) single‑page application that showcases a responsive user directory, theming, and clean UX using the ReqRes API. Built for a hiring task with professional structure and documentation.
 
-## Development server
+## Highlights
+- Paginated users list (centered and responsive)
+- Dark/Light theme toggle with persisted preference
+- Custom UI styling (no external UI library required)
+- Standalone Angular components (no NgModules)
+- API key handling via HTTP interceptor
+- Loading state UI while data is fetched
 
-To start a local development server, run:
+## Tech Stack
+- Angular 20 (standalone APIs)
+- RxJS
+- ReqRes API
 
+## Getting Started
+
+### 1) Install dependencies
 ```bash
-ng serve
+npm install
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+### 2) Add your ReqRes API key
+ReqRes now requires an API key for requests. Create one at `https://reqres.in`.
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
+Update the key in:
+```
+src/environments/environment.ts
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
+```ts
+export const environment = {
+  apiKey: 'YOUR_KEY_HERE'
+};
 ```
 
-## Building
-
-To build the project run:
-
+### 3) Run the app
 ```bash
-ng build
+npm start
+```
+Open `http://localhost:4200/` in your browser.
+
+## API Usage
+The app consumes the ReqRes API:
+- List users: `https://reqres.in/api/users?page={page}`
+- Single user: `https://reqres.in/api/users/{id}`
+
+The API key is attached automatically to each request via an HTTP interceptor at:
+```
+src/app/core/interceptors/api-key.interceptor.ts
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
+## Project Structure (high level)
+```
+src/
+  app/
+    components/
+      header/              # Top bar with theme toggle
+    pages/
+      users/               # Users list + pagination
+    core/
+      interceptors/        # API key handling
+      services/            # Theme service
+  environments/
+    environment.ts         # ReqRes API key
 ```
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## Notes for Reviewers
+- The UI is fully responsive and optimized for desktop and mobile.
+- Theme preference is persisted in localStorage and applied on load.
+- Clean, standalone structure allows fast extension (detail page, search, caching).

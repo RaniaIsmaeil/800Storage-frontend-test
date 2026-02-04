@@ -1,0 +1,39 @@
+<section class="users">
+  <div class="section-heading">
+    <div>
+      <p class="eyebrow">Users</p>
+      <h1>User Directory</h1>
+      <p class="subtitle">Browse the users list.</p>
+    </div>
+    <div class="page-chip">Page {{ page() }} of {{ totalPages() }}</div>
+  </div>
+
+  <div class="loading-bar" *ngIf="isLoading()">
+    <span></span>
+  </div>
+
+  <div class="status error" *ngIf="error()">{{ error() }}</div>
+
+  <div class="card-grid" *ngIf="!isLoading() && !error()">
+    <article class="user-card" *ngFor="let user of users()">
+      <div class="avatar-wrap">
+        <img [src]="user.avatar" [alt]="user.first_name + ' ' + user.last_name" />
+      </div>
+      <div class="card-body">
+        <h2>{{ user.first_name }} {{ user.last_name }}</h2>
+        <p class="meta">ID: {{ user.id }}</p>
+        <p class="meta">{{ user.email }}</p>
+        <button type="button" class="ghost">View profile</button>
+      </div>
+    </article>
+  </div>
+
+  <div class="pagination">
+    <button type="button" class="primary" (click)="prevPage()" [disabled]="page() === 1 || isLoading()">
+      Previous
+    </button>
+    <button type="button" class="primary" (click)="nextPage()" [disabled]="page() === totalPages() || isLoading()">
+      Next
+    </button>
+  </div>
+</section>

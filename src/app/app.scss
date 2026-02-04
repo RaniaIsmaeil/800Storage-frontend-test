@@ -1,0 +1,38 @@
+.page {
+  color: var(--ink);
+}
+
+.page {
+  min-height: 100vh;
+  background: var(--page-bg);
+  position: relative;
+  overflow: hidden;
+}
+
+.page::before,
+.page::after {
+  content: "";
+  position: absolute;
+  width: 420px;
+  height: 420px;
+  background: var(--page-glow);
+  filter: blur(20px);
+  z-index: 0;
+}
+
+.page::before {
+  top: -120px;
+  right: -80px;
+}
+
+.page::after {
+  bottom: -160px;
+  left: -120px;
+}
+
+
+.content {
+  padding: 36px 20px 64px;
+  position: relative;
+  z-index: 1;
+}
