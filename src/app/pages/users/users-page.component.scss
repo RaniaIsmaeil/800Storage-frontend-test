@@ -99,15 +99,15 @@ body[data-theme='light'] .status.error {
 
 .card-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-  gap: 22px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 38px;
   justify-items: center;
   margin-top: 20px;
 }
 
 .user-card {
   width: 100%;
-  max-width: 290px;
+  max-width: 100%;
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: 24px;
@@ -163,23 +163,39 @@ body[data-theme='light'] .user-card {
 .ghost {
   margin-top: 10px;
   background: transparent;
-  border: 1px solid var(--line);
+  border: 2px solid var(--line);
   color: var(--ink);
   padding: 8px 14px;
   border-radius: 12px;
   font-weight: 600;
+  text-decoration: none;
+  display: inline-flex;
+  justify-content: center;
   cursor: pointer;
   transition: background 0.2s ease, border 0.2s ease;
 }
 
+.ghost:visited {
+  color: var(--ink);
+}
+
 .ghost:hover {
   background: rgba(255, 255, 255, 0.12);
-  border-color: rgba(255, 255, 255, 0.35);
+  border-color: rgba(255, 255, 255, 0.55);
+}
+
+body[data-theme='light'] .ghost {
+  border-color: #b9c0cc;
+  background: #ffffff;
+  color: #111827;
 }
 
 body[data-theme='light'] .ghost:hover {
-  background: rgba(18, 24, 38, 0.06);
-  border-color: rgba(18, 24, 38, 0.15);
+  background: #f3f5f9;
+  border-color: #111827;
+  outline: 2px solid #111827;
+  outline-offset: 1px;
+  box-shadow: 0 10px 20px rgba(17, 24, 39, 0.12);
 }
 
 .pagination {
@@ -201,6 +217,8 @@ body[data-theme='light'] .ghost:hover {
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   box-shadow: 0 12px 24px rgba(255, 138, 92, 0.35);
+  min-width: 140px;
+  text-align: center;
 }
 
 .primary:disabled {

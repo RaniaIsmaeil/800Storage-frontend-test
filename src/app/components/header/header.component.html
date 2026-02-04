@@ -2,15 +2,21 @@
   <div class="brand">
     <div class="brand-mark">800</div>
     <div class="brand-text">
-      <span class="brand-title">Storage Users</span>
+      <span class="brand-title">User Directory</span>
       <span class="brand-subtitle">ReqRes API</span>
     </div>
   </div>
   <nav class="topbar-actions">
     <button type="button" class="theme-toggle" (click)="theme.toggle()" aria-label="Toggle theme">
-      <span class="icon" [class.light]="theme.mode() === 'light'" aria-hidden="true">
-        {{ theme.mode() === 'light' ? '☀' : '☾' }}
-      </span>
+      @if (theme.mode() === 'light') {
+        <span class="icon sun" aria-hidden="true">☀</span>
+      } @else {
+        <span class="icon moon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" role="presentation">
+            <path d="M14.5 2a9.5 9.5 0 1 0 7.2 15.7 1 1 0 0 0-1.08-1.55 7 7 0 0 1-8.77-8.77A1 1 0 0 0 10.3 6.3 9.5 9.5 0 0 0 14.5 2Z" />
+          </svg>
+        </span>
+      }
     </button>
   </nav>
 </header>

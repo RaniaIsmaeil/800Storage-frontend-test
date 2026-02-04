@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
 type ApiUser = {
   id: number;
@@ -21,12 +22,14 @@ type UsersResponse = {
 @Component({
   selector: 'app-users-page',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './users-page.component.html',
   styleUrl: './users-page.component.scss'
 })
 export class UsersPageComponent {
   private readonly http = inject(HttpClient);
+  private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
 
   protected readonly users = signal<ApiUser[]>([]);
   protected readonly page = signal(1);
@@ -35,11 +38,13 @@ export class UsersPageComponent {
   protected readonly error = signal<string | null>(null);
 
   constructor() {
-    this.loadPage(1);
+    const pageParam = Number(this.route.snapshot.queryParamMap.get('page'));
+    const initialPage = pageParam && !Number.isNaN(pageParam) ? pageParam : 1;
+    this.loadPage(initialPage);
   }
 
   protected loadPage(page: number) {
-    if (page < 1 || page > this.totalPages()) {
+    if (page < 1) {
       return;
     }
 
@@ -50,6 +55,11 @@ export class UsersPageComponent {
         this.users.set(response.data);
         this.page.set(response.page);
         this.totalPages.set(response.total_pages);
+        this.router.navigate([], {
+          relativeTo: this.route,
+          queryParams: { page: response.page },
+          queryParamsHandling: 'merge'
+        });
         this.isLoading.set(false);
       },
       error: () => {

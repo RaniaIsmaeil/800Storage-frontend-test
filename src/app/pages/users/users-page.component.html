@@ -23,12 +23,12 @@
         <h2>{{ user.first_name }} {{ user.last_name }}</h2>
         <p class="meta">ID: {{ user.id }}</p>
         <p class="meta">{{ user.email }}</p>
-        <button type="button" class="ghost">View profile</button>
+        <a class="ghost" [routerLink]="['/users', user.id]" [queryParams]="{ page: page() }">View profile</a>
       </div>
     </article>
   </div>
 
-  <div class="pagination">
+  <div class="pagination" *ngIf="!isLoading()">
     <button type="button" class="primary" (click)="prevPage()" [disabled]="page() === 1 || isLoading()">
       Previous
     </button>

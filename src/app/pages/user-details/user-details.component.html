@@ -1,0 +1,25 @@
+<section class="details" *ngIf="!isLoading()">
+  <a class="back" routerLink="/" [queryParams]="backQuery()">Back to list</a>
+
+  <div class="status error" *ngIf="error()">{{ error() }}</div>
+
+  <div class="profile" *ngIf="user() as person">
+    <div class="avatar">
+      <img [src]="person.avatar" [alt]="person.first_name + ' ' + person.last_name" />
+    </div>
+    <div class="info">
+      <p class="eyebrow">User profile</p>
+      <h1>{{ person.first_name }} {{ person.last_name }}</h1>
+      <p class="email">{{ person.email }}</p>
+      <div class="meta">
+        <span class="label">User ID</span>
+        <strong>#{{ person.id }}</strong>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="loading" *ngIf="isLoading()">
+  <div class="loading-bar"><span></span></div>
+  <p>Loading user details...</p>
+</div>
