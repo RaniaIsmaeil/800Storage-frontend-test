@@ -13,6 +13,7 @@
   backdrop-filter: blur(12px);
   background: var(--topbar-bg);
   border-bottom: 1px solid var(--line);
+  gap: 20px;
 }
 
 .brand {
@@ -54,6 +55,94 @@
   display: flex;
   align-items: center;
   gap: 12px;
+}
+
+.search {
+  position: relative;
+}
+
+.search input {
+  width: 220px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink);
+  outline: none;
+  font-size: 0.9rem;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+.search input:focus {
+  border-color: rgba(255, 138, 92, 0.6);
+  box-shadow: 0 0 0 3px rgba(255, 138, 92, 0.18);
+}
+
+.search-panel {
+  position: absolute;
+  top: 48px;
+  right: 0;
+  width: 260px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 12px;
+  box-shadow: 0 20px 40px rgba(3, 6, 14, 0.25);
+  display: grid;
+  gap: 10px;
+  z-index: 20;
+}
+
+.search-status {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.search-status.error {
+  color: var(--muted);
+}
+
+body[data-theme='light'] .search-status.error {
+  color: rgba(18, 24, 38, 0.6);
+}
+
+.search-result {
+  border: none;
+  background: transparent;
+  display: grid;
+  grid-template-columns: 42px 1fr;
+  gap: 10px;
+  align-items: center;
+  padding: 6px;
+  border-radius: 12px;
+  cursor: pointer;
+  text-align: left;
+  color: var(--ink);
+}
+
+.search-result:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+body[data-theme='light'] .search-result:hover {
+  background: rgba(18, 24, 38, 0.06);
+}
+
+.search-result img {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+.search-result strong {
+  display: block;
+  font-size: 0.95rem;
+}
+
+.search-result span {
+  font-size: 0.8rem;
+  color: var(--muted);
 }
 
 .theme-toggle {
@@ -105,8 +194,18 @@ body[data-theme='light'] .icon.moon {
   filter: drop-shadow(0 0 6px rgba(17, 24, 39, 0.35));
 }
 
-@media (max-width: 640px) {
+@media (max-width: 900px) {
+  .search input {
+    width: 180px;
+  }
+}
+
+@media (max-width: 720px) {
   .topbar {
     padding: 14px 16px;
+  }
+
+  .search {
+    display: none;
   }
 }

@@ -4,6 +4,8 @@ A polished Angular (standalone) single‑page application that showcases a respo
 
 ## Highlights
 - Paginated users list (centered and responsive)
+- User details page with back navigation
+- Instant search by user ID with live results
 - Dark/Light theme toggle with persisted preference
 - Custom UI styling (no external UI library required)
 - Standalone Angular components (no NgModules)
@@ -57,9 +59,10 @@ src/app/core/interceptors/api-key.interceptor.ts
 src/
   app/
     components/
-      header/              # Top bar with theme toggle
+      header/              # Top bar + theme + search
     pages/
       users/               # Users list + pagination
+      user-details/        # User details page
     core/
       interceptors/        # API key handling
       services/            # Theme service
@@ -70,4 +73,5 @@ src/
 ## Notes for Reviewers
 - The UI is fully responsive and optimized for desktop and mobile.
 - Theme preference is persisted in localStorage and applied on load.
-- Clean, standalone structure allows fast extension (detail page, search, caching).
+- Search by ID is instant and supports partial matches (e.g., `1` → `1`, `11`).
+- Clean, standalone structure allows fast extension (caching, interceptors, etc.).

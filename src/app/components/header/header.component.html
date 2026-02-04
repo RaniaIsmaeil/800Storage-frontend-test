@@ -6,7 +6,35 @@
       <span class="brand-subtitle">ReqRes API</span>
     </div>
   </div>
+
   <nav class="topbar-actions">
+    <form class="search" (ngSubmit)="onSubmit()" autocomplete="off" novalidate>
+      <input
+        type="search"
+        placeholder="Search user by ID"
+        [value]="query"
+        (input)="onQueryChange($any($event.target).value)"
+        (focus)="openPanel()"
+        name="userSearch"
+      />
+      <div class="search-panel" *ngIf="showPanel()">
+        <div class="search-status" *ngIf="isSearching()">Searching...</div>
+        <div class="search-status error" *ngIf="error()">{{ error() }}</div>
+        <button
+          type="button"
+          class="search-result"
+          *ngFor="let user of results()"
+          (click)="goToUser(user)"
+        >
+          <img [src]="user.avatar" [alt]="user.first_name + ' ' + user.last_name" />
+          <div>
+            <strong>{{ user.first_name }} {{ user.last_name }}</strong>
+            <span>ID: {{ user.id }}</span>
+          </div>
+        </button>
+      </div>
+    </form>
+
     <button type="button" class="theme-toggle" (click)="theme.toggle()" aria-label="Toggle theme">
       @if (theme.mode() === 'light') {
         <span class="icon sun" aria-hidden="true">☀</span>
